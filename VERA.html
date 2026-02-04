@@ -1,0 +1,328 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Happy Birthday</title>
+    <style>
+      :root {
+        --ink: #1b1b1b;
+        --accent: #f36a5a;
+        --accent-2: #ffd36a;
+        --bg-1: #fff6f0;
+        --bg-2: #ffe8e0;
+        --card: #ffffff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Georgia", "Times New Roman", serif;
+        color: var(--ink);
+        background: radial-gradient(1200px 500px at 20% 10%, var(--bg-2), transparent),
+          radial-gradient(900px 400px at 80% 20%, #fff, transparent),
+          linear-gradient(180deg, var(--bg-1), #fff);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 16px;
+        position: relative;
+        overflow-x: hidden;
+      }
+      .card {
+        width: min(720px, 100%);
+        background: var(--card);
+        border-radius: 24px;
+        padding: 32px 28px;
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.08),
+          0 2px 6px rgba(0, 0, 0, 0.05);
+        position: relative;
+        overflow: hidden;
+      }
+      .glow {
+        position: absolute;
+        inset: -20% -10% auto auto;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(243, 106, 90, 0.25), transparent 60%);
+        filter: blur(8px);
+        animation: breathe 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+      .ribbon {
+        position: absolute;
+        inset: -40px -40px auto auto;
+        width: 140px;
+        height: 140px;
+        background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--accent));
+        transform: rotate(25deg);
+        opacity: 0.2;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(32px, 5vw, 48px);
+        letter-spacing: 0.5px;
+      }
+      .name {
+        display: inline-block;
+        color: var(--accent);
+        animation: heartbeat 2.4s ease-in-out infinite;
+      }
+      .subtitle {
+        font-size: 18px;
+        margin: 0 0 24px;
+        color: #5a4a43;
+      }
+      .date {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .message {
+        line-height: 1.6;
+        font-size: 18px;
+        margin: 0 0 20px;
+      }
+      .signature {
+        margin-top: 24px;
+        font-style: italic;
+        font-size: 18px;
+      }
+      .photo {
+        display: block;
+        width: 50%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 18px;
+        box-shadow: 0 12px 22px rgba(0, 0, 0, 0.12);
+        margin: 14px auto 18px;
+        transform: translateY(0);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+      .photo:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 16px 28px rgba(0, 0, 0, 0.18);
+      }
+      .heart-line {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin: 20px 0;
+        color: var(--accent);
+        font-size: 18px;
+      }
+      .heart-line::before,
+      .heart-line::after {
+        content: "";
+        height: 1px;
+        background: #f1c3bd;
+        flex: 1;
+      }
+      .sparkle {
+        display: inline-block;
+        animation: twinkle 2.6s ease-in-out infinite;
+        color: var(--accent);
+      }
+      .pill {
+        display: inline-block;
+        background: #fff3ee;
+        color: #7a3b34;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 14px;
+      }
+      .hearts {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .heart {
+        position: absolute;
+        bottom: -40px;
+        left: calc(var(--x) * 1%);
+        font-size: calc(14px + (var(--s) * 10px));
+        color: rgba(243, 106, 90, 0.6);
+        animation: float-up 8s linear infinite;
+        animation-delay: calc(var(--d) * 1s);
+        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.08));
+      }
+      .clipart {
+        position: absolute;
+        pointer-events: none;
+        opacity: 0.6;
+      }
+      .clipart.left {
+        left: -30px;
+        bottom: 20px;
+        width: 140px;
+        animation: float-side 7s ease-in-out infinite;
+      }
+      .clipart.right {
+        right: -20px;
+        top: 30px;
+        width: 120px;
+        animation: float-side 8s ease-in-out infinite reverse;
+      }
+      @keyframes float-up {
+        0% {
+          transform: translateY(0) scale(0.9);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-120vh) scale(1.2);
+          opacity: 0;
+        }
+      }
+      @keyframes float-side {
+        0% {
+          transform: translateY(0) rotate(-2deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(3deg);
+        }
+        100% {
+          transform: translateY(0) rotate(-2deg);
+        }
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+      }
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+      }
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        10% {
+          transform: scale(1.06);
+        }
+        20% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(1.08);
+        }
+        45% {
+          transform: scale(1);
+        }
+      }
+      @media (max-width: 520px) {
+        .card {
+          padding: 24px 20px;
+        }
+        .message {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hearts" aria-hidden="true">
+      <span class="heart" style="--x: 8; --d: 0; --s: 1">&hearts;</span>
+      <span class="heart" style="--x: 22; --d: 2; --s: 0.6">&hearts;</span>
+      <span class="heart" style="--x: 35; --d: 4; --s: 0.9">&hearts;</span>
+      <span class="heart" style="--x: 50; --d: 1; --s: 1.1">&hearts;</span>
+      <span class="heart" style="--x: 63; --d: 3; --s: 0.7">&hearts;</span>
+      <span class="heart" style="--x: 78; --d: 5; --s: 1.2">&hearts;</span>
+      <span class="heart" style="--x: 90; --d: 2.5; --s: 0.8">&hearts;</span>
+    </div>
+    <svg class="clipart left" viewBox="0 0 120 120" aria-hidden="true">
+      <defs>
+        <linearGradient id="heartGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f36a5a" />
+          <stop offset="100%" stop-color="#ffd36a" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M60 103c-2.5-2.2-28.7-21.1-40.5-35.8C9.7 55 8 44.6 12.6 35.8 18.9 24 33 20.6 45 26.4c6.3 3 10.5 8 15 14.2 4.5-6.2 8.7-11.2 15-14.2 12-5.8 26.1-2.4 32.4 9.4 4.6 8.8 2.9 19.2-6.9 31.4C88.7 81.9 62.5 100.8 60 103z"
+        fill="url(#heartGrad)"
+      />
+    </svg>
+    <svg class="clipart right" viewBox="0 0 120 120" aria-hidden="true">
+      <path
+        d="M60 16l9.5 19.2 21.2 3.1-15.3 14.9 3.6 21.1L60 64.8 41 74.3l3.6-21.1L29.3 38.3l21.2-3.1L60 16z"
+        fill="#f7b6a8"
+      />
+    </svg>
+    <main class="card">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="ribbon" aria-hidden="true"></div>
+      <div class="pill">For My Favorite Human</div>
+      <h1>Happy Birthday, <span class="name" id="name">Vera</span></h1>
+      <p class="subtitle">
+        A tiny page, a huge heart <span class="sparkle">✦</span> —
+        <span class="date">4th Feb</span>
+      </p>
+
+      <p class="message">
+        Today is about celebrating you and everything you are, VERA. You make the ordinary
+        feel warm and the hard days feel lighter. <strong>Hongera mpenzi</strong> on
+        choosing yourself and starting a new chapter with courage and hope.
+      </p>
+      <img class="photo" src="IMG-20260204-WA0003.jpg" alt="Vera memory 1" />
+      <p class="message">
+        You are my favorite hello and my soft place to land. Every day with you feels
+        like a little miracle, and I love the way your smile makes the whole world gentler.
+        
+      </p>
+      <p class="message">
+        I know the college path was not easy, but your story is bigger than any one season.
+        <strong>Usikate tamaa</strong> -- your light is still growing, and your dreams are
+        still valid. <strong>You are stronger than you imagine</strong>, and I believe in you.
+      </p>
+      <img class="photo" src="IMG-20260204-WA0002.jpg" alt="Vera memory 3" />
+      <p class="message">
+        Here is to the laughs we keep, the dreams we build, and the moments we have not
+        even imagined yet. <strong>Nakupenda sana</strong>, and I am so grateful for you.
+      </p>
+      <img class="photo" src="IMG-20260204-WA0001.jpg" alt="Vera memory 4" />
+      <p class="message">
+        If I could, I would wrap this page around you like a hug. Until then, keep this:
+        I choose you, again and again.
+      </p>
+
+
+
+      <div class="heart-line">with all my love</div>
+
+      <div class="signature">-- <span id="from">Dom</span></div>
+    </main>
+
+    <script>
+    
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get("name");
+      const from = params.get("from");
+      if (name) document.getElementById("name").textContent = name;
+      if (from) document.getElementById("from").textContent = from;
+    </script>
+  </body>
+</html>
